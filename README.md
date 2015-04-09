@@ -1,2 +1,2 @@
-flango
+Welcome to BilboJS
 ======

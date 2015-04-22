@@ -6,13 +6,24 @@ return {
 
 		return this.el;
 	},
+	objVal: function(value){ //ensure that null value isn't passed for the object
+		return value || {};
+	},
+	strVal: function(value){
+		return value || "";
+	},
 	create: function(elType, options){
-		var element = document.createElement(elType),
-			options = options || {};
+		var element = document.createElement(elType);
+			
+		options = this.objVal(options);
 
-		element.className = options['class'] || "";
-		element.id = options.id || "";
-
+		element.className = this.strVal(options['class']);
+		element.id = this.strVal(options.id);
+		/*
+		for(var prop in options){
+			if(prop){ element[prop] = options[prop]; }
+		}
+*/
 		return element;
 	},
 	uuid: function(){
@@ -80,18 +91,19 @@ return {
 	},
 	getChildIndex: function(child){
 		var i = 0;
-		while( (child = child.previousSibling) != null ) i++;
+		while( (child = child.previousSibling) !== null ) i++;
 		return i;
 	},
-	isTouch: function(){
+	hasTouch: function(){
 		var isTouch = (('ontouchstart' in window) || (navigator.msMaxTouchPoints > 0));
 		return isTouch;
 	},
 	getParentElement: function(element, tagName){
 		tagName = tagName.toUpperCase();
 		do{
-			if(element.tagName === tagName){ return element;}
-		} while(element = element.parentNode);
+			if(element.tagName === tagName){ return element; }
+			element = element.parentNode;
+		} while(element !== null);
 
 		return null;
 	},
@@ -109,13 +121,35 @@ return {
 	},
 	createAudioPool: function(){
 		var Pool = function(){
-
+			this.audioList = new Array();
 		};
 
 		Pool.prototype = {
-			add: function(id, fileName){},
-			remove: function(id){},
-			play: function(id){}
+			add: function(id, fileName){
+				var audio = new Audio(fileName);
+				audio.load();
+				this.audioList[id] = audio;
+			},
+			remove: function(id){
+				if(!this.audioList[id]){ throw Error("Audio Not Found"); }
+				delete this.audioList[id];
+			},
+			pause: function(id){
+				if(!this.audioList[id]){ throw Error("Audio Not Found"); }
+				this.audioList[id].pause();
+			},
+			stop: function(id){
+				this.pause(id);
+				this.audioList[id].currentTime = 0;
+			},
+			play: function(id){
+				if(!this.audioList[id]){ throw Error("Audio Not Found"); }
+				this.audioList[id].play();
+			},
+			get: function(id){
+				if(!this.audioList[id]){ throw Error("Audio Not Found"); }
+				return this.audioList[id];
+			}
 		};
 	}
 };

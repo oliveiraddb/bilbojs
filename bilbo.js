@@ -119,6 +119,7 @@ return {
 			action(list[i], i);
 		}
 	},
+	alias: function(a, action){ action(a); },
 	createAudioPool: function(){
 		var Pool = function(){
 			this.audioList = new Array();

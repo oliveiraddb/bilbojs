@@ -6,6 +6,7 @@ return {
 
 		return this.el;
 	},
+	exec: function(name, args){ var action = function(e){$this[name].call($this, e||args)}; return action; }
 	objVal: function(value){ //ensure that null value isn't passed for the object
 		return value || {};
 	},

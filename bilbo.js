@@ -6,6 +6,12 @@ return {
 
 		return this.el;
 	},
+	queue: {
+		init: function(){ this.list = {} },
+		add: function(func){ this.list.push(func); },
+		run: function(){ this.list.reverse(); while(this.list.length){ this.list.pop()(); }; },
+		clear: function(){ while(this.list.length){ this.list.pop(); }; }
+	},
 	exec: function(name, args){ var action = function(e){$this[name].call($this, e||args)}; return action; }
 	objVal: function(value){ //ensure that null value isn't passed for the object
 		return value || {};

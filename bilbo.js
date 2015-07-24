@@ -13,6 +13,7 @@ return {
 	strVal: function(value){
 		return value || "";
 	},
+	replace: function(str, search, replacement){ return str.split(search).join(replacement); },
 	create: function(elType, options){
 		var element = document.createElement(elType);
 			

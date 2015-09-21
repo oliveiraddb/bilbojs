@@ -340,7 +340,6 @@
 
   //TODO funções relacionadas ao form e ajax
   //TODO adicionar as funções de extend e plugin
-  //TODO adicionar as funções do bilbo (queue)
 
   ;
 

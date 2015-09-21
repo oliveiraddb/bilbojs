@@ -83,7 +83,8 @@
   },
 
   _setCss = function(el, props, value, index){
-    (value instanceof Function) && setCss(el, props, value.call(el, index, el.style[props])) ||
+    (value instanceof Function)? setCss(el, props, value.call(el, index, el.style[props])) :
+    (typeof value === "string")? setCss(el, props, value) :
     forEach(createArray(props), function(value, prop){ setCss(el, prop, value) });
   },
 
@@ -347,8 +348,8 @@
     if(this instanceof jQuery){
       // return
       this.elements = createArray(
-        (selector instanceof Array || selector instanceof NodeList || selector instanceof HTMLElement)
-        ?selector:document.querySelectorAll(selector)
+        (selector instanceof Array || selector instanceof NodeList || selector instanceof HTMLElement || selector instanceof Window || selector instanceof HTMLDocument)?selector:
+		document.querySelectorAll(selector)
       );
       // TODO: ver se o parametro são htmlString e transformar em elements
     } else {

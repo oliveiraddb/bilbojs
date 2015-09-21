@@ -9,7 +9,8 @@
     forEach((classNames || "").split(" "), function (className) { el.classList.add(className) });
   },
   _after = function(el, newNode){
-    el.parentElement.insertBefore(newNode, el.nextSibling);
+    //el.parentElement.insertBefore(newNode, el.nextSibling);
+    el.insertAdjacentHTML('afterend', htmlString);
   },
   after = function(el, newNodes, index) {
     forEach(newNodes, function(newNode){
@@ -40,7 +41,8 @@
     for(var i in attr){ el.setAttribute(i, attr[i]); }
   },
   _before = function(el, newNode){
-    el.parentElement.insertBefore(newNode, el);
+    //el.parentElement.insertBefore(newNode, el);
+    el.insertAdjacentHTML('beforeend', htmlString);
   },
   before = function(el, newNodes, index) {
     forEach(newNodes, function(newNode){
